@@ -10,7 +10,6 @@ def get_video_embed(instance):
     if instance.video_type == "youtube":
         video_id = extract_youtube_id(instance.video_url)
         
-        print(f"Extracted YouTube ID: {video_id} from URL: {instance.video_url}")
         if not video_id:
             return ""
 

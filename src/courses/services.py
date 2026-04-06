@@ -3,7 +3,7 @@ from .models import Course, Lesson, CourseStatus
 from enrollments.models import Enrollment
 
 def get_published_courses():
-    return Course.objects.filter(status__in=[CourseStatus.ONGOING,CourseStatus.COMPLETED,])
+    return Course.objects.filter(status__in=[CourseStatus.ONGOING,CourseStatus.COMPLETED])
 
 
 def get_course_detail(course_id=None):
