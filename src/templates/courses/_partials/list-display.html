@@ -36,7 +36,8 @@
 
             <div class="flex items-center gap-2">
                 <img class="w-7 h-7 rounded-full"
-                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png">
+                     src="{% if object.lecturer and object.lecturer.get_profile_image_url %}{{ object.lecturer.get_profile_image_url }}{% else %}https://ui-avatars.com/api/?name={{ object.lecturer.get_full_name|urlencode }}&background=000000&color=ffffff&size=64{% endif %}"
+                     alt="Lecturer profile image">
                 {% if object.lecturer %}
                 <span class="text-sm text-gray-300">
                    {{object.lecturer.get_full_name}}
