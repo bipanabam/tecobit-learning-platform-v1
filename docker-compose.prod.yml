@@ -3,22 +3,12 @@ version: "3.9"
 services:
   web:
     image: tecobit-learning-platform:latest
-    restart: always
     build: .
     command: /entrypoint.sh
     env_file:
       - .env.production
     volumes:
       - static_volume:/app/staticfiles
-
-  nginx:
-    image: nginx:alpine
     restart: always
-    volumes:
-      - static_volume:/app/staticfiles
-      - ./nginx:/etc/nginx/conf.d
-    depends_on:
-      - web
-
 volumes:
   static_volume:
