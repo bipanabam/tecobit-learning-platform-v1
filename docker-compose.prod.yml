@@ -9,6 +9,8 @@ services:
       - .env.production
     volumes:
       - static_volume:/app/staticfiles
+    expose:
+      - "8000"
     restart: always
 volumes:
   static_volume:
