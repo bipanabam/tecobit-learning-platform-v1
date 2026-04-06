@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bg-[--neutral-color] py-16 px-6 min-h-screen">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="mb-12">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="px-3 py-1 rounded-full bg-[--primary-color]/10 text-[--primary-color] text-xs font-bold uppercase tracking-wider">
+          {{ course.get_status_display }}
+        </span>
+      </div>
+      <h1 class="text-4xl font-extrabold text-white mb-4">{{ course.title }}</h1>
+      <p class="text-lg text-[--muted-text]">{{ course.description }}</p>
+    </div>
+
+    <div class="space-y-3">
+      {% if not lessons %}
+        <p class="text-center text-gray-500 italic">No lessons available for this course yet.</p>
+      {% endif %}
+      {% for lesson in lessons %}
+      <div class="group bg-[#1a1a1a] border border-gray-800 rounded-xl overflow-hidden transition-all duration-200 hover:border-gray-600">
+        
+        <button class="lesson-toggle w-full flex items-center justify-between p-4 text-left">
+          <div class="flex items-center gap-4">
+            
+            <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center bg-black/40 border border-gray-700">
+              {% if lesson.is_coming_soon %}
+                <i data-lucide="calendar-clock" class="w-5 h-5 text-yellow-500"></i>
+              {% elif has_access or lesson.can_preview %}
+                <i data-lucide="play-circle" class="w-5 h-5 text-[--primary-color]"></i>
+              {% else %}
+                <i data-lucide="lock" class="w-5 h-5 text-gray-500"></i>
+              {% endif %}
+            </div>
+
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold text-gray-500 uppercase">Lesson {{ forloop.counter }}</span>
+                {% if lesson.can_preview and not has_access %}
+                  <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full border border-green-500/30">Free Preview</span>
+                {% endif %}
+              </div>
+              <h3 class="text-white font-semibold group-hover:text-[--primary-color] transition-colors">
+                {{ lesson.title }}
+              </h3>
+            </div>
+          </div>
+
+          <i data-lucide="chevron-down" class="chevron w-5 h-5 text-gray-500 transition-transform duration-300"></i>
+        </button>
+
+        <div class="lesson-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-black/10">
+          <div class="p-5 ml-14 border-t border-gray-800/50">
+            
+            <div class="flex flex-col md:flex-row gap-6">
+              {% if lesson.get_thumbnail %}
+              <div class="w-full md:w-40 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-gray-900">
+                <img src="{{ lesson.get_thumbnail }}" alt="{{ lesson.title }}" class="w-full h-full object-cover opacity-60">
+              </div>
+              {% endif %}
+
+              <div class="flex-1">
+                <p class="text-sm text-[--muted-text] mb-4 leading-relaxed">
+                  {{ lesson.description|default:"No description available for this lesson." }}
+                </p>
+
+                {% if lesson.is_coming_soon %}
+                  <p class="text-xs text-yellow-600 font-medium italic">Content arriving soon...</p>
+                {% elif has_access or lesson.can_preview %}
+                  <a href="{{ lesson.get_absolute_url }}" 
+                     class="inline-flex items-center gap-2 px-5 py-2.5 bg-[--primary-color] text-black font-bold rounded-lg hover:scale-105 transition-transform text-sm">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                    {% if lesson.can_preview and not has_access %}Watch Preview{% else %}Start Learning{% endif %}
+                  </a>
+                {% else %}
+                  <div class="p-3 rounded-lg bg-red-500/5 border border-red-500/20 inline-block">
+                    <p class="text-xs text-red-400 flex items-center gap-2">
+                      <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                      Enroll in the course to unlock this lesson.
+                    </p>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize Lucide Icons
+  lucide.createIcons();
+
+  const toggles = document.querySelectorAll(".lesson-toggle");
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const parent = toggle.closest(".group");
+      const content = parent.querySelector(".lesson-content");
+      const chevron = toggle.querySelector(".chevron");
+
+      // Toggle current
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+        chevron.style.transform = "rotate(0deg)";
+      } else {
+        // Close others
+        document.querySelectorAll(".lesson-content").forEach((el) => {
+           el.style.maxHeight = null;
+           el.closest(".group").querySelector(".chevron").style.transform = "rotate(0deg)";
+        });
+        
+        content.style.maxHeight = content.scrollHeight + "px";
+        chevron.style.transform = "rotate(180deg)";
+      }
+    });
+  });
+});
+</script>
+{% endblock content %}

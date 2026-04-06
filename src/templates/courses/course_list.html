@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+Courses
+{% endblock head_title %}
+
+{% block content %}
+
+<section class="bg-[--neutral-color] py-16 px-6">
+
+  <!-- Heading -->
+  <div class="max-w-7xl mx-auto text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+      Explore <span class="text-[--primary-color]">Courses</span>
+    </h2>
+    <p class="text-[--muted-text] max-w-2xl mx-auto">
+      Learn backend engineering, system design, and real-world development skills.
+    </p>
+  </div>
+
+  <!-- Course Grid -->
+  <div class="max-w-7xl mx-auto">
+    {% include "courses/_partials/list-display.html" with queryset=courses %}
+  </div>
+
+</section>
+
+{% endblock content %}

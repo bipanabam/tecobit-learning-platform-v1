@@ -1,0 +1,64 @@
+<div class="grid gap-6 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+{% for object in queryset %}
+
+<article class="bg-[--secondary-color] border border-gray-800 rounded-2xl overflow-hidden hover:border-[--primary-color] transition group">
+
+    <!-- Thumbnail -->
+    {% if object.get_thumbnail %}
+    <a href="{{object.get_absolute_url}}">
+        <img class="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
+             src="{{object.get_thumbnail}}" alt="thumbnail" />
+    </a>
+    {% endif %}
+
+    <div class="p-5 space-y-3">
+
+        {% if object.is_coming_soon %}
+        <span class="text-xs text-[--primary-color] font-semibold">
+            COMING SOON
+        </span>
+        {% endif %}
+
+        <!-- Title -->
+        <h2 class="text-lg font-semibold text-white group-hover:text-[--primary-color] transition">
+            <a href="{{object.get_absolute_url}}">
+                {{object.title}}
+            </a>
+        </h2>
+
+        <!-- Description -->
+        <p class="text-sm text-[--muted-text] line-clamp-2">
+            {{object.description}}
+        </p>
+
+        <!-- Footer -->
+        <div class="flex justify-between items-center pt-3">
+
+            <div class="flex items-center gap-2">
+                <img class="w-7 h-7 rounded-full"
+                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png">
+                {% if object.lecturer %}
+                <span class="text-sm text-gray-300">
+                   {{object.lecturer.get_full_name}}
+                </span>
+                {% else %}
+                <span class="text-sm text-gray-300">
+                   Tecobit Team 
+                </span>
+                {% endif %}
+            </div>
+
+            <a href="{{object.get_absolute_url}}"
+               class="text-sm text-[--primary-color] flex items-center gap-1 hover:underline">
+                View
+                →
+            </a>
+
+        </div>
+
+    </div>
+
+</article>
+
+{% endfor %}
+</div>

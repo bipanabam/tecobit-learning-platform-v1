@@ -1,0 +1,32 @@
+<nav class="bg-[--secondary-color] border-b border-gray-800 shadow-md px-6 py-3">
+  <div class="flex items-center justify-between max-w-7xl mx-auto">
+
+    <!-- Logo -->
+    <a href="{% url 'home' %}" class="flex items-center gap-2">
+      <span class="text-xl font-semibold text-white">TecoBit Academy</span>
+    </a>
+
+    <!-- Links -->
+    <div class="hidden md:flex items-center gap-8 text-sm">
+      <a href="{% url 'home' %}" class="hover:text-[--primary-color] transition">Home</a>
+      <a href="{% url 'course_list' %}" class="hover:text-[--primary-color] transition">Courses</a>
+      <a href="#" class="hover:text-[--primary-color] transition">About</a>
+      <a href="#" class="hover:text-[--primary-color] transition">Pricing</a>
+    </div>
+
+    <!-- Auth buttons -->
+    <div class="flex items-center gap-3">
+      {% if not request.user.is_authenticated %}
+        <a href="{% url 'login' %}" class="text-sm btn-primary">Login</a>
+
+        {% comment %} <a href="{% url 'signup' %}"
+           class="btn-primary text-sm">
+          Sign Up
+        </a> {% endcomment %}
+      {% else %}
+        <a href="{% url 'logout' %}" class="text-sm btn-danger">Logout</a>
+      {% endif %}
+    </div>
+
+  </div>
+</nav>

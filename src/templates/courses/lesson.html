@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bg-[--neutral-color] min-h-screen">
+  <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row">
+    
+    <div class="flex-1 p-6 lg:p-10">
+      
+      <a href="{{ lesson.course.get_absolute_url }}" class="flex items-center gap-2 text-sm text-[--muted-text] hover:text-[--primary-color] mb-6 transition-colors">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Back to {{ lesson.course.title }}
+      </a>
+
+      <div class="relative w-full h-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-gray-800">
+        {{ video_embed|safe }}
+      </div>
+
+      <div class="mt-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-2">{{ lesson.title }}</h1>
+            <p class="text-sm text-[--muted-text]">Part of {{ lesson.course.title }} • Lesson {{ lesson.order }}</p>
+          </div>
+          
+            <div class="flex gap-3">
+            {% with prev_lesson=lesson.get_previous_lesson %}
+                {% if prev_lesson %}
+                <a href="{{ prev_lesson.get_absolute_url }}" 
+                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-800 text-white text-sm hover:bg-gray-700 transition">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    Previous
+                </a>
+                {% else %}
+                <span class="px-4 py-2 rounded-lg bg-gray-900 text-gray-600 text-sm cursor-not-allowed">
+                    Previous
+                </span>
+                {% endif %}
+            {% endwith %}
+
+            {% with next_lesson=lesson.get_next_lesson %}
+                {% if next_lesson %}
+                <a href="{{ next_lesson.get_absolute_url }}" 
+                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-[--primary-color] text-black font-bold text-sm hover:opacity-90 transition">
+                    Next Lesson
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </a>
+                {% else %}
+                <span class="px-4 py-2 rounded-lg bg-gray-900 text-gray-600 text-sm cursor-not-allowed">
+                    Next Lesson
+                </span>
+                {% endif %}
+            {% endwith %}
+            </div>
+        </div>
+
+        <hr class="border-gray-800 mb-6" />
+
+        <div class="prose prose-invert max-w-none">
+          <h3 class="text-lg font-semibold text-white mb-3">About this lesson</h3>
+          <p class="text-[--muted-text] leading-relaxed">
+            {{ lesson.description|linebreaks }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-[400px] bg-[#121212] border-l border-gray-800 lg:h-screen lg:sticky lg:top-0 overflow-y-auto">
+      <div class="p-6 border-b border-gray-800">
+        <h2 class="font-bold text-white uppercase text-xs tracking-widest">Course Content</h2>
+      </div>
+
+      <div class="divide-y divide-gray-800">
+        {% for list_lesson in all_lessons %}
+        <a href="{{ list_lesson.get_absolute_url }}" 
+           class="flex items-start gap-4 p-5 transition-colors {% if list_lesson.id == lesson.id %}bg-[--primary-color]/10 border-l-4 border-[--primary-color]{% else %}hover:bg-white/5{% endif %}">
+          
+          <div class="flex-shrink-0 mt-1">
+             {% if list_lesson.id == lesson.id %}
+                <i data-lucide="play" class="w-4 h-4 text-[--primary-color] fill-current"></i>
+             {% elif not has_access %}
+                <i data-lucide="lock" class="w-4 h-4 text-gray-600"></i>
+             {% else %}
+                <i data-lucide="circle-play" class="w-4 h-4 text-gray-400"></i>
+             {% endif %}
+          </div>
+
+          <div>
+            <p class="text-xs font-medium text-gray-500 mb-1">Lesson {{ forloop.counter }}</p>
+            <h4 class="text-sm font-semibold {% if list_lesson.id == lesson.id %}text-[--primary-color]{% else %}text-gray-300{% endif %}">
+              {{ list_lesson.title }}
+            </h4>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    lucide.createIcons();
+  });
+</script>
+{% endblock content %}

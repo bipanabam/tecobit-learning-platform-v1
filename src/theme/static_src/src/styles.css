@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "flowbite/src/themes/default";
+
+:root {
+    --primary-color: #BEF264;
+    /* Amber */
+    --secondary-color: #27272A;
+    /* Dark gray */
+    --tertiary-color: #818CF8;
+    /* Gold accent */
+    --neutral-color: #09090B;
+    /* Near black */
+
+    --text-color: #E4E4E7;
+    --muted-text: #A1A1AA;
+}
+
+.btn-primary {
+    @apply bg-[--primary-color] text-black px-4 py-2 rounded-lg font-medium hover:opacity-90;
+}
+
+.btn-danger {
+    @apply bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition;
+}
+
+.card {
+    @apply bg-[--secondary-color] border border-gray-800 rounded-2xl shadow-lg;
+}
+
+.card-hover {
+    @apply hover:border-[--primary-color] transition;
+}
+
+.input {
+    @apply w-full p-3 rounded-lg bg-[#18181B] border border-gray-700 text-white text-sm focus:outline-none focus:border-[--primary-color];
+}

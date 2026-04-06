@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Course Plateform
+{% endblock head_title %}
+
+{% block content %}
+
+{% comment %} {% if not request.session.email_id %} {% endcomment %}
+{% comment %} <h1 class="text-3xl font-bold underline mb-3">
+    Haven't signed up yet? Let's get started!
+</h1>
+<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+     focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
+     text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+<a href="{% url 'signup' %}">Get started</a></button> {% endcomment %}
+{% comment %} {% endif %} {% endcomment %}
+
+<section class="max-w-7xl mx-auto px-6 py-16">
+
+  <!-- Hero -->
+  <div class="grid md:grid-cols-2 gap-10 items-center">
+
+    <!-- Left -->
+    <div>
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+        Learn <span class="text-[--primary-color]">Modern Skills</span><br>
+        Build Your Future
+      </h1>
+
+      <p class="text-[--muted-text] mb-6">
+        A platform to master backend engineering, system design, and real-world projects.
+      </p>
+
+      <div class="flex gap-4">
+        <a href="{% url 'course_list' %}"
+           class="bg-[--primary-color] text-black px-6 py-3 rounded-lg font-medium hover:opacity-90 transition">
+          Explore Courses
+        </a>
+
+        <a href="#"
+           class="border border-gray-700 px-6 py-3 rounded-lg hover:border-[--primary-color] hover:text-[--primary-color] transition">
+          Learn More
+        </a>
+      </div>
+    </div>
+
+    <!-- Right (UI Card style like your image) -->
+    <div class="bg-[--secondary-color] p-6 rounded-2xl shadow-lg border border-gray-800">
+
+      <div class="mb-4">
+        <div class="h-2 bg-[--primary-color] w-1/2 rounded"></div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="h-3 bg-gray-700 rounded w-3/4"></div>
+        <div class="h-3 bg-gray-700 rounded w-1/2"></div>
+        <div class="h-3 bg-gray-700 rounded w-2/3"></div>
+      </div>
+
+      <div class="mt-6 flex gap-3">
+        <div class="w-8 h-8 bg-[--primary-color] rounded-full"></div>
+        <div class="w-8 h-8 bg-gray-600 rounded-full"></div>
+        <div class="w-8 h-8 bg-gray-500 rounded-full"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% load static tailwind_tags %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% tailwind_css %}
+    {% include "base/js.html" %}
+    <title>{% block head_title %}
+    {% endblock head_title %}</title>
+  </head>
+  <body hx-headers='{"X-CSRFToken": "{{csrf_token}}"}' class="bg-[--neutral-color] text-[--text-color]">
+
+    <div class="flex-1 flex-col min-h-screen">
+      <div class="flex-1">
+        {% include "base/navbar.html" %}
+      </div>
+      <div class="py-5 px-4 mx-auto lg:py-10 lg:px-6">
+        {% if messages %}
+          <div class="max-w-6xl mx-auto px-6 mt-4">
+            {% for message in messages %}
+              <div class="mb-4 p-4 rounded-lg bg-yellow-100 text-yellow-800">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% block content %}
+      {% endblock content %}
+      </div>
+    </div>
+  </body>
+</html>
+
+
