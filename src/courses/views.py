@@ -37,7 +37,7 @@ def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs)
     )
     if lesson_obj is None:
         raise Http404("Course not found")
-    if not services.user_has_access_to_course(request.user, lesson_obj.course):
+    if not services.user_can_access_lesson(request.user, lesson_obj):
         request.session['next_url'] = request.path
         print(request.path)
         return render(request, "courses/enrollment-required.html", {})

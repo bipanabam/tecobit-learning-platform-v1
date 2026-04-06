@@ -17,11 +17,17 @@ class CustomUserAdmin(UserAdmin):
         ("Roles", {
             "fields": ("is_student", "is_instructor"),
         }),
+        ("Profile Image", {
+            "fields": ("profile_image",),
+        }),
     )
 
     add_fieldsets = UserAdmin.add_fieldsets + (
         ("Roles", {
             "fields": ("is_student", "is_instructor"),
+        }),
+        ("Profile Image", {
+            "fields": ("profile_image",),
         }),
     )
 

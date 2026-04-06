@@ -59,3 +59,35 @@ def user_has_access_to_course(user, course):
         course=course,
         is_active=True
     ).exists()
+    
+def user_can_access_lesson(user, lesson):
+    course = lesson.course
+
+    if course.access == "any":
+        return True
+    
+    if lesson.can_preview:
+        return True
+
+    if not user.is_authenticated:
+        return False
+
+    return Enrollment.objects.filter(
+        student=user,
+        course=course,
+        is_active=True
+    ).exists()
+    
+def get_visible_lessons(user, course):
+    lessons = get_course_lessons(course)
+
+    if course.access == "any":
+        return lessons
+
+    if not user.is_authenticated:
+        return lessons.filter(can_preview=True)
+
+    if user_has_access_to_course(user, course):
+        return lessons
+
+    return lessons.filter(can_preview=True)
