@@ -5,6 +5,9 @@ set -e  # exit on error
 echo "Applying migrations..."
 python manage.py migrate --noinput
 
+echo "Installing Tailwind dependencies..."
+python manage.py tailwind install
+
 echo "Building Tailwind CSS..."
 python manage.py tailwind build
 
