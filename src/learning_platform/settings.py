@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
-NPM_BIN_PATH = r"/home/bipana/.nvm/versions/node/v22.21.1/bin/npm"
+NPM_BIN_PATH = config("NPM_BIN_PATH", default="/usr/bin/npm")
 
 BASE_URL = config("BASE_URL", default="http://127.0.0.1:8000")
 # default Backend
